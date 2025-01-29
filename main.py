@@ -1,7 +1,7 @@
 #main script of the robot
 import Motor from motor
 import LineSensor from linesensor
-
+from utime import sleep
 paths = {
     ('st','da'):['L','RR','LOAD'],
     ('st','db'):['R','RL','LOAD'],
@@ -50,12 +50,29 @@ def find_type_of_line(): #tells us if we are on a line, veering off, at a juncti
     #then other logic that turns the bot
 
 def move_forward():
-    pass
-
+    motor_left.forward(20)
+    motor_right.forward(20)
+    sleep(1)
+    motor_left.off()
+    motor_right.off()
+    
 def turn(direction):
     pass
 
 def adjust(direction):
+    if direction == 'L':
+        motor_left.forward(20)
+        motor_right.forward(15)
+        sleep(1)
+        motor_left.off()
+        motor_right.off()
+    elif direction == 'R':
+        motor_left.forward(15)
+        motor_right.forward(20)
+        sleep(1)
+        motor_left.off()
+        motor_right.off()
+def reverse(direction):
     pass
 #main loop:
 
@@ -63,17 +80,34 @@ path = ('st','da')
 while True:
     for instruction in paths[path]:
         state = find_type_of_line() #where robot is
-        match state: #check we are in python 3.10
-            case 'ONLINE':
-                move_forward()
-            case 'LINE':
-                break
-            case 'OFFRIGHT':
-                adjust('right')
-            case 'OFFLEFT':
-                adjust('left')
-            case 'LEFTTURN':
-                turn()
-            case 'OFFTHEGRID':
-                break
-            case 
+        fulfilled = False
+        while fulfilled == False:
+            match state: #check we are in python 3.10
+                case 'ONLINE':
+                    move_forward()
+                case 'OFFTHEGRID':
+                    break
+                case 'OFFRIGHT':
+                    adjust('right')
+                case 'OFFLEFT':
+                    adjust('left')
+                case 'LEFTTURN':
+                    if instruction == 'L':
+                        turn()
+                        fulfilled = True
+                    elif instruction == 'RL':
+                        reverse()
+                        fulfilled = True
+                    else:
+                        move_forward()
+                case 'RIGHTTURN':
+                    if instruction == 'R':
+                        turn()
+                        fulfilled = True
+                    elif instruction == 'RR':
+                        reverse()
+                        fulfilled = True
+                    else:
+                        move_forward()
+                case 'TJUNCTION':
+                    pass
