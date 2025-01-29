@@ -50,26 +50,26 @@ def find_type_of_line(): #tells us if we are on a line, veering off, at a juncti
     #then other logic that turns the bot
 
 def move_forward():
-    motor_left.forward(20)
-    motor_right.forward(20)
-    sleep(1)
+    motor_left.forward(30)
+    motor_right.forward(30)
+    sleep(0.1)
     motor_left.off()
     motor_right.off()
-    
+
 def turn(direction):
     pass
 
 def adjust(direction):
     if direction == 'L':
-        motor_left.forward(20)
-        motor_right.forward(15)
-        sleep(1)
+        motor_left.forward(30)
+        motor_right.forward(20)
+        sleep(0.1)
         motor_left.off()
         motor_right.off()
     elif direction == 'R':
-        motor_left.forward(15)
-        motor_right.forward(20)
-        sleep(1)
+        motor_left.forward(20)
+        motor_right.forward(30)
+        sleep(0.1)
         motor_left.off()
         motor_right.off()
 def reverse(direction):
@@ -88,9 +88,9 @@ while True:
                 case 'OFFTHEGRID':
                     break
                 case 'OFFRIGHT':
-                    adjust('right')
+                    adjust('R')
                 case 'OFFLEFT':
-                    adjust('left')
+                    adjust('L')
                 case 'LEFTTURN':
                     if instruction == 'L':
                         turn()
